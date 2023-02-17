@@ -1,18 +1,22 @@
 use image_convert::{ImageResource, InterlaceType, identify_read, PNGConfig, to_png};
 use std::path::Path;
+use std::string::String;
 use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() > 1 {
-        // println!("The following arguments were passed:");
-        // for arg in &args[1..] {
-        //     println!("Argument: [{}]", arg);
-        // }
         // Get input file from filepath
 
-        let source_image_path = Path::new(&args[1]);
+        let filepath_string: String = String::from(&args[1]);
+
+        if filepath_string.contains(".png") {
+            println!("---\nThis image is already a .png. No reason for converstion.");
+            return;
+        }
+
+        let source_image_path = Path::new(&filepath_string);
 
         let target_image_path = Path::join(
             source_image_path.parent().unwrap(), 
